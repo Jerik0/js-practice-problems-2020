@@ -253,7 +253,6 @@ hammingDistance('abc', 'ab'); //=> NaN
 
   const fromPairs = array => {
     const entries = new Map(array);
-
     return Object.fromEntries(entries);
   }
 
@@ -322,8 +321,49 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 16-findHighestPriced here:
 
+  const findHighestPriced = array => {
+    let highestPricedObject;
+    array.forEach((el, index) => {
+      if ( array[index-1] ) {
+        if ( el.price > array[index-1].price ) {
+          highestPricedObject = el;
+        }
+      } else {
+        highestPricedObject = el;
+      }
+    });
+    return highestPricedObject;
+  };
 
+  console.log(findHighestPriced([
+    {sku: 'a1', price: 25},
+    {sku: 'b2', price: 5},
+    {sku: 'c3', price: 50},
+    {sku: 'd4', price: 10}
+  ]));
+  //=> { sku: 'c3', price: 50 }
+  console.log(findHighestPriced([
+    {sku: 'a1', price: 25},
+    {sku: 'b2', price: 5},
+    {sku: 'c3', price: 50},
+    {sku: 'd4', price: 10}
+  ]));
+  //=> { sku: 'c3', price: 50 }
 
+  console.log(findHighestPriced([
+    {sku: 'a1', price: 25},
+    {sku: 'b2', price: 50},
+    {sku: 'c3', price: 50},
+    {sku: 'd4', price: 10}
+  ]));
+  //=> { sku: 'b2', price: 50 }
+  console.log(findHighestPriced([
+    {sku: 'a1', price: 25},
+    {sku: 'b2', price: 50},
+    {sku: 'c3', price: 50},
+    {sku: 'd4', price: 10}
+  ]));
+  //=> { sku: 'b2', price: 50 }
 
 
   /*-----------------------------------------------------------------
@@ -337,7 +377,10 @@ hammingDistance('abc', 'ab'); //=> NaN
 
   - Write a function named mapArray that accepts two arguments: a single array and a callback function.
   - The mapArray function should return a new array of the same length as the array argument.
-  - The mapArray function should iterate over each element in the array (first arg).  For each iteration, invoke the callback function (2nd arg), passing to it as arguments, the current element and its index.  Whatever is returned by the callback function should be included in the new array at the index of the current iteration.
+  - The mapArray function should iterate over each element in the array (first arg).  For each iteration, invoke the
+  callback function (2nd arg), passing to it the current element and its index, as arguments.
+  Whatever is returned by the callback function should be included in the new array at the index of the current
+   iteration.
 
   Examples:
 
@@ -353,9 +396,23 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 17-mapArray here:
 
+  const mapArray = (array, fn) => {
+    let newArray = [];
+    array.forEach((el, ind) => {
+      newArray.push(fn(el, ind));
+    });
+    return newArray;
+  }
 
+  console.log(mapArray([1, 2, 3], function (n) {
+    return n * 2;
+  }));
+  //=> [2, 4, 6]  (a new array)
 
-
+  console.log(mapArray(['rose', 'tulip', 'daisy'], function (f, i) {
+    return `${i + 1} - ${f}`;
+  }));
+  //=> ["1 - rose", "2 - tulip", "3 - daisy"]
 
   /*-----------------------------------------------------------------
   Challenge: 18-reduceArray
