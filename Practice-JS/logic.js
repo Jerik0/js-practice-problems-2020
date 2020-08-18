@@ -247,13 +247,18 @@ hammingDistance('abc', 'ab'); //=> NaN
   Examples:
 
   fromPairs([ ['a', 1], ['b', 2], ['c', 3] ]) //=> { a: 1, b: 2, c: 3 }
-  fromPairs([ ['name', 'Sam"], ['age', 24], ['name', 'Sally'] ]) //=> { name: "Sally", age: 24 }
+  fromPairs([ ['name', 'Sam'], ['age', 24], ['name', 'Sally'] ]) //=> { name: "Sally", age: 24 }
   -----------------------------------------------------------------*/
 // Your solution for 14-fromPairs here:
 
+  const fromPairs = ( array ) => {
+    const entries = new Map(array);
 
+    return Object.fromEntries(entries);
+  }
 
-
+  console.log(fromPairs([['a', 1], ['b', 2], ['c', 3]])); //=> { a: 1, b: 2, c: 3 }
+  console.log(fromPairs([['name', 'Sam'], ['age', 24], ['name', 'Sally']])); //=> { name: "Sally", age: 24 }
 
   /*-----------------------------------------------------------------
   Challenge: 15-mergeObjects
