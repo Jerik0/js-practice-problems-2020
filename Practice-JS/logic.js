@@ -458,12 +458,11 @@ hammingDistance('abc', 'ab'); //=> NaN
 // Your solution for 18-reduceArray here:
 
     const reduceArray = (arr, fn, acc) => {
-      let previouslyReturnedValue;
+      let value;
       arr.forEach((el, ind) => {
-        previouslyReturnedValue = ind === 0 ? fn(acc, el, ind) : fn(previouslyReturnedValue, el, ind);
+        value = ind === 0 ? fn(acc, el, ind) : fn(value, el, ind);
       });
-
-      return previouslyReturnedValue;
+      return value;
     };
 
   console.log(reduceArray([1, 2, 3], (acc, n) => {
@@ -509,9 +508,23 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 19-flatten here:
 
+  const flatten = array => {
+    let flattenedArray = [];
+    array.forEach((el) => {
+      if ( Array.isArray(el) ) {
+        flattenedArray = flattenedArray.concat(flatten(el));
+      } else {
+        flattenedArray.push(el);
+      }
+    });
+    return flattenedArray;
+  };
 
+  console.log(flatten([1, [2, 3]]));
+  //=> [1, 2, 3]  (a new array)
 
-
+  console.log(flatten([1, [2, [3, [4]]], 1, 'a', ['b', 'c']]));
+  //=> [1, 2, 3, 4, 1, 'a', 'b', 'c']
 
   /*-----------------------------------------------------------------
   Challenge: 20-isPrime
