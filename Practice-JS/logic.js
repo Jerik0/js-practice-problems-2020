@@ -138,24 +138,15 @@ isPalindrome(''); //=> true
 // Your solution for 11-isPalindrome here:
 
   const isPalindrome = (str) => {
-    let firstHalf;
-    let lastHalf;
     let strNoSpaces = str.replace(/\s+/g, '');
-    if ( strNoSpaces.length % 2 === 0 ) {
-      firstHalf = strNoSpaces.substring(0, strNoSpaces.length / 2);
-      lastHalf = strNoSpaces.substring(strNoSpaces.length / 2, strNoSpaces.length);
-    } else {
-      firstHalf = strNoSpaces.substring(0, strNoSpaces.length / 2);
-      lastHalf = strNoSpaces.substring(Math.floor(strNoSpaces.length / 2) + 1, strNoSpaces.length);
-    }
-    return firstHalf.split('').reverse().join('').toUpperCase() === lastHalf.toUpperCase();
+    return str.length === 0 ? true : strNoSpaces.split('').reverse().join('').toUpperCase() === strNoSpaces.toUpperCase();
   }
 
   console.log(isPalindrome('SEI Rocks')); //=> false
   console.log(isPalindrome('rotor')); //=> true
   console.log(isPalindrome('A nut for a jar of tuna')); //=> true
   console.log(isPalindrome('')); //=> true
-  console.log(isPalindrome('noon'));
+  console.log(isPalindrome('noon')); //=> true
 
   /*-----------------------------------------------------------------
 Challenge: 12-hammingDistance
@@ -179,8 +170,26 @@ hammingDistance('abc', 'ab'); //=> NaN
 -----------------------------------------------------------------*/
 // Your solution for 12-hammingDistance here:
 
+  const hammingDistance = (str1, str2) => {
+    let differences = 0;
+    let str1Array = str1.split('');
+    let str2Array = str2.split('');
+    if ( str1Array.length === str2Array.length ) {
+      str1Array.forEach((str1Char, str1Ind) => {
+        if ( str2Array[str1Ind] !== str1Char ) {
+          differences += 1;
+        }
+      });
+    } else {
+      return NaN;
+    }
+    return differences;
+  }
 
-
+  console.log(hammingDistance('abc', 'abc')); //=> 0
+  console.log(hammingDistance('a1c', 'a2c')); //=> 1
+  console.log(hammingDistance('!!!!', '****')); //=> 4
+  console.log(hammingDistance('abc', 'ab')); //=> NaN
 
 
   /*-----------------------------------------------------------------
@@ -203,9 +212,26 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 13-mumble here:
 
+  const mumble = (str) => {
+    let mumbledString = '';
+    let stringToArray = str.split('');
 
+    stringToArray.forEach((character, currentIndex) => {
+      if ( character !== stringToArray[currentIndex - 1] && mumbledString.length > 0 ) {
+        mumbledString += '-';
+      }
+      for (let i = 0; i < currentIndex + 1; i++) {
+        mumbledString += character;
+      }
+    });
 
+    return mumbledString;
+  }
 
+  console.log(mumble('X')); //=> 'X'
+  console.log(mumble('abc')); //=> 'a-bb-ccc'
+  console.log(mumble('121')); //=> '1-22-111'
+  console.log(mumble('!A 2'));  //=> '!-AA-   -2222'
 
   /*-----------------------------------------------------------------
   Challenge: 14-fromPairs
