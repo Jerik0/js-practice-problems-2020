@@ -23,7 +23,7 @@
     return arr.reduce(function(acc, cv) {
       return acc + cv;
     }, 0);
-  }
+  };
 
   console.log(sumNumbers([10]));
   console.log(sumNumbers([5, 10]));
@@ -51,7 +51,7 @@
 
   const computeRemainder = (a, b) => {
     return b === 0 ? Infinity : Math.abs(a - (Math.round(a / b) * b));
-  }
+  };
 
   console.log(computeRemainder(10, 2));
   console.log(computeRemainder(4,0));
@@ -80,7 +80,7 @@
     } else {
       return str.substring(1, (str.length - 1));
     }
-  }
+  };
 
   console.log(removeEnds('SEI Rocks!'));
   console.log(removeEnds('a'));
@@ -111,7 +111,7 @@
     });
 
     return obj;
-  }
+  };
 
   console.log(charCount('hello'));
   console.log(charCount('Today is fantastic!'));
@@ -140,7 +140,7 @@ isPalindrome(''); //=> true
   const isPalindrome = str => {
     let strNoSpaces = str.replace(/\s+/g, '');
     return str.length === 0 ? true : strNoSpaces.split('').reverse().join('').toUpperCase() === strNoSpaces.toUpperCase();
-  }
+  };
 
   console.log(isPalindrome('SEI Rocks')); //=> false
   console.log(isPalindrome('rotor')); //=> true
@@ -184,7 +184,7 @@ hammingDistance('abc', 'ab'); //=> NaN
       return NaN;
     }
     return differences;
-  }
+  };
 
   console.log(hammingDistance('abc', 'abc')); //=> 0
   console.log(hammingDistance('a1c', 'a2c')); //=> 1
@@ -226,7 +226,7 @@ hammingDistance('abc', 'ab'); //=> NaN
     });
 
     return mumbledString;
-  }
+  };
 
   console.log(mumble('X')); //=> 'X'
   console.log(mumble('abc')); //=> 'a-bb-ccc'
@@ -254,7 +254,7 @@ hammingDistance('abc', 'ab'); //=> NaN
   const fromPairs = array => {
     const entries = new Map(array);
     return Object.fromEntries(entries);
-  }
+  };
 
   console.log(fromPairs([['a', 1], ['b', 2], ['c', 3]])); //=> { a: 1, b: 2, c: 3 }
   console.log(fromPairs([['name', 'Sam'], ['age', 24], ['name', 'Sally']])); //=> { name: "Sally", age: 24 }
@@ -281,7 +281,7 @@ hammingDistance('abc', 'ab'); //=> NaN
     return args.reduce((a, b) => {
       return Object.assign(a, b);
     })
-  }
+  };
 
   console.log(mergeObjects({}, {a: 1}));  //=> {a: 1} (same object as first arg)
   console.log(mergeObjects({a: 1, b: 2, c: 3}, {d: 4}));  //=> {a: 1, b: 2, c: 3, d: 4}
@@ -342,6 +342,7 @@ hammingDistance('abc', 'ab'); //=> NaN
     {sku: 'd4', price: 10}
   ]));
   //=> { sku: 'c3', price: 50 }
+
   console.log(findHighestPriced([
     {sku: 'a1', price: 25},
     {sku: 'b2', price: 5},
@@ -357,6 +358,7 @@ hammingDistance('abc', 'ab'); //=> NaN
     {sku: 'd4', price: 10}
   ]));
   //=> { sku: 'b2', price: 50 }
+
   console.log(findHighestPriced([
     {sku: 'a1', price: 25},
     {sku: 'b2', price: 50},
@@ -402,7 +404,7 @@ hammingDistance('abc', 'ab'); //=> NaN
       newArray.push(fn(el, ind));
     });
     return newArray;
-  }
+  };
 
   console.log(mapArray([1, 2, 3], function (n) {
     return n * 2;
@@ -423,10 +425,17 @@ hammingDistance('abc', 'ab'); //=> NaN
 
   The goal is of this challenge is to write a function that performs the functionality of JavaScript's Array.prototype.reduce method.
 
-  - Write a function named reduceArray that accepts three arguments: (1) an array; (2) a callback function; and (3) a value used as the initial value of the "accumulator".
+  - Write a function named reduceArray that accepts three arguments: (1) an array; (2) a callback function; and (3)
+    a value used as the initial value of the "accumulator".
+
   - The reduceArray function should return whatever is returned by the callback function on the last iteration.
-  - The reduceArray function should iterate over each element in the array (first arg).  For each iteration, invoke the callback function (2nd arg), passing to it three arguments: (1) the "accumulator", which is the value returned by the callback during the previous iteration; (2) the  current element; and (3) the index of the current iteration.
-  - On the first iteration, provide the third argument provided to reduceArray as the first argument when invoking the callback, then for subsequent iterations, provide the value returned by the callback during the previous iteration.
+
+  - The reduceArray function should iterate over each element in the array (first arg).  For each iteration,
+    invoke the callback function (2nd arg), passing to it three arguments: (1) the "accumulator", which is the value returned by the
+    callback during the previous iteration; (2) the  current element; and (3) the index of the current iteration.
+
+  - On the first iteration, provide the third argument provided to reduceArray as the first argument when invoking the
+    callback, then for subsequent iterations, provide the value returned by the callback during the previous iteration.
 
   Examples:
 
@@ -448,9 +457,30 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 18-reduceArray here:
 
+    const reduceArray = (arr, fn, acc) => {
+      let previouslyReturnedValue;
+      arr.forEach((el, ind) => {
+        previouslyReturnedValue = ind === 0 ? fn(acc, el, ind) : fn(previouslyReturnedValue, el, ind);
+      });
 
+      return previouslyReturnedValue;
+    };
 
+  console.log(reduceArray([1, 2, 3], (acc, n) => {
+    return acc + n;
+  }, 0));
+  //=> 6
 
+  console.log(reduceArray([1, 2, 3], (acc, n,  i) => {
+    return acc + n + i;
+  }, 0));
+  //=> 9
+
+  console.log(reduceArray(['Yes', 'No', 'Yes', 'Maybe'], (acc, v) => {
+    acc[v] = acc[v] ? acc[v] + 1 : 1;
+    return acc;
+  }, {}));
+  //=> {"Yes": 2, "No": 1, "Maybe": 1}
 
   /*-----------------------------------------------------------------
   Challenge: 19-flatten
