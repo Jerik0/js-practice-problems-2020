@@ -19,7 +19,7 @@
   -----------------------------------------------------------------*/
 // Your solution for 03-sumNumbers here:
 
-  const sumNumbers = (arr) => {
+  const sumNumbers = arr => {
     return arr.reduce(function(acc, cv) {
       return acc + cv;
     }, 0);
@@ -74,7 +74,7 @@
   // -----------------------------------------------------------------*/
 // Your solution for 08-removeEnds here:
 
-  const removeEnds = (str) => {
+  const removeEnds = str => {
     if (str.length < 3) {
       return '';
     } else {
@@ -103,7 +103,7 @@
   // -----------------------------------------------------------------*/
 // Your solution for 09-charCount here:
 
-  const charCount = (str) => {
+  const charCount = str => {
     let obj = {};
     str.split('').map((char) => {
       let regex = new RegExp(`${char}`, 'g');
@@ -137,7 +137,7 @@ isPalindrome(''); //=> true
 -----------------------------------------------------------------*/
 // Your solution for 11-isPalindrome here:
 
-  const isPalindrome = (str) => {
+  const isPalindrome = str => {
     let strNoSpaces = str.replace(/\s+/g, '');
     return str.length === 0 ? true : strNoSpaces.split('').reverse().join('').toUpperCase() === strNoSpaces.toUpperCase();
   }
@@ -212,7 +212,7 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 13-mumble here:
 
-  const mumble = (str) => {
+  const mumble = str => {
     let mumbledString = '';
     let stringToArray = str.split('');
 
@@ -251,7 +251,7 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 14-fromPairs here:
 
-  const fromPairs = ( array ) => {
+  const fromPairs = array => {
     const entries = new Map(array);
 
     return Object.fromEntries(entries);
@@ -278,9 +278,15 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 15-mergeObjects here:
 
+  const mergeObjects = (...args) => { // ...args is ES6 syntax offering a clean way to deal with n number of arguments.
+    return args.reduce((a, b) => {
+      return Object.assign(a, b);
+    })
+  }
 
-
-
+  console.log(mergeObjects({}, {a: 1}));  //=> {a: 1} (same object as first arg)
+  console.log(mergeObjects({a: 1, b: 2, c: 3}, {d: 4}));  //=> {a: 1, b: 2, c: 3, d: 4}
+  console.log(mergeObjects({a: 1, b: 2, c: 3}, {d: 4}, {b: 22, d: 44}));  //=> {a: 1, b: 22, c: 3, d: 44}
 
   /*-----------------------------------------------------------------
   Challenge: 16-findHighestPriced
