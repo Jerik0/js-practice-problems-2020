@@ -510,7 +510,7 @@ hammingDistance('abc', 'ab'); //=> NaN
 
   const flatten = array => {
     let flattenedArray = [];
-    array.forEach((el) => {
+    array.forEach( el => {
       if ( Array.isArray(el) ) {
         flattenedArray = flattenedArray.concat(flatten(el));
       } else {
@@ -546,9 +546,22 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 20-isPrime here:
 
+  const isPrime = num => {
+    let prime = true;
+    for (let i = num; i > 0; i--) { // if current number isn't 1 or given number, and if given number can be divided
+      // by current number as a whole number, it's not a prime number.
+      if ( i !== num && i !== 1 && Number.isInteger(num / i)) {
+        prime = false;
+      }
+    }
+    return prime;
+  };
 
-
-
+  console.log(isPrime(2)); //=> true
+  console.log(isPrime(3)); //=> true
+  console.log(isPrime(4)); //=> false
+  console.log(isPrime(29)); //=> true
+  console.log(isPrime(200)); //=> false
 
   /*-----------------------------------------------------------------
   Challenge: 21-primeFactors
@@ -574,9 +587,31 @@ hammingDistance('abc', 'ab'); //=> NaN
   -----------------------------------------------------------------*/
 // Your solution for 21-primeFactors here:
 
+  const primeFactors = num => {
+    let primeFactorsArray = [];
+    if ( isPrime(num) ) {
+      return [num];
+    } else if ( num <= 1 || !Number.isInteger(num) ) {
+      return [];
+    }
 
+    for (let i = 2; i <= num; i++ ) {
+      while ( isPrime(i) && num % i === 0 ) {
+          primeFactorsArray.push(i);
+          num /= i;
+      }
+    }
 
+    return primeFactorsArray;
+  };
 
+  console.log(primeFactors(2)); //=> [2]
+  console.log(primeFactors(3)); //=> [3]
+  console.log(primeFactors(4)); //=> [2, 2]
+  console.log(primeFactors(18));  //=> [2, 3, 3]
+  console.log(primeFactors(29));  //=> [29]
+  console.log(primeFactors(105)); //=> [3, 5, 7]
+  console.log(primeFactors(200)); //=> [2, 2, 2, 5, 5]
 
   /*-----------------------------------------------------------------
   Challenge: 22-intersection
